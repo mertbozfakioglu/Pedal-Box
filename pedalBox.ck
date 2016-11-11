@@ -1,4 +1,3 @@
-
 //KEYS
 //1-2:GAIN, 3-4:PAN, 5-6:LPF, 7-8:HPF
 //Q-W:REVERB, E-R:DELAY_GAIN, T-Y:DELAY_LENGTH
@@ -25,11 +24,11 @@ adc => Gain g => NRev rev => Chorus cho => Echo ech => HPF hpf => LPF lpf => Pan
 gainV => g.gain;
 
 //hpf
-4000 => float hpfV;
+500 => float hpfV;
 hpfV => hpf.freq;
 
 //lpf
-3000 => float lpfV;
+20000 => float lpfV;
 lpfV => lpf.freq;
 
 //pan
@@ -62,7 +61,7 @@ revMixV => rev.mix;
 //chorus
 0.3 => float choModFreqV;
 0.9 => float choModDepthV;
-0.9 => float choMixV;
+0.0 => float choMixV;
 choModFreqV => cho.modFreq;
 choModDepthV => cho.modDepth;
 choMixV => cho.mix;
