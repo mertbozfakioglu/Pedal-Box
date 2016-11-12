@@ -1,3 +1,4 @@
+
 //KEYS
 //1-2:GAIN, 3-4:PAN, 5-6:LPF, 7-8:HPF
 //Q-W:REVERB, E-R:DELAY_GAIN, T-Y:DELAY_LENGTH
@@ -20,6 +21,15 @@ if( !hi.openKeyboard( device ) ) me.exit();
 
 //Sound Connections
 adc => Gain g => NRev rev => Chorus cho => Echo ech => HPF hpf => LPF lpf => Pan2 pan => dac;
+pan => LiSa save => dac;
+
+
+
+//LOOP
+1 => int recording;
+0::second => dur loopDur;
+now => time timeInit;
+
 1 => float gainV;
 gainV => g.gain;
 
@@ -222,7 +232,34 @@ while (true) {
                 delay => ech.delay;
                 max => ech.max;
                 <<<echoLengthV>>>;
-            }            
+            }  
+            if (msg.key == 44){
+                if (recording == 1){
+                    now => timeInit;
+                    //0 => save.play;
+                    //5::second => save.duration;
+                    2 => recording;
+                    //start recording 
+                    //1 => save.record;
+                    <<<"starting">>>;
+                }
+                //stop recording 
+                else if (recording == 2){
+                    now - timeInit => save.duration;
+                    1 => save.record;
+                    3 => recording;
+                    <<<"recording">>>;     
+                }
+                else if (recording == 3){
+                    0 => save.record;
+                    1 => save.play;
+                    4 => recording;
+                }
+                else if (recording == 4){
+                    0 => save.play;
+                    1 => recording;
+                }
+            }
         }
     }
     100 :: ms => now;
